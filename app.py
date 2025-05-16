@@ -1,21 +1,66 @@
-# This is app is created by Chanin Nantasenamat (Data Professor) https://youtube.com/dataprofessor
-# Credit: This app is inspired by https://huggingface.co/spaces/osanseviero/esmfold
-# Enhanced with additional features like error handling, loading indicators, and visualization options
-
 import streamlit as st
 from stmol import showmol
 import py3Dmol
 import requests
 import biotite.structure.io as bsio
+import os
 import re
 import time
+import base64
+from pathlib import Path
 
 # Configure page
 st.set_page_config(page_title="ESMFold Protein Structure Prediction", layout='wide')
 
+def add_logo(logo_path):
+    """This function loads a logo from the filesystem and displays it in the sidebar"""
+    logo_path = Path(logo_path)
+    
+    if not logo_path.exists():
+        # If the exact path doesn't exist, try common variations
+        possible_paths = [
+            "logo.png",
+        ]
+        
+        for path in possible_paths:
+            if Path(path).exists():
+                logo_path = Path(path)
+                break
+    
+    if logo_path.exists():
+        with open(logo_path, "rb") as f:
+            data = f.read()
+        
+        # Get the file extension to determine MIME type
+        ext = logo_path.suffix.lower()
+        mime_type = "image/png" if ext == ".png" else "image/jpeg" if ext in [".jpg", ".jpeg"] else "image/svg+xml"
+        
+        encoded = base64.b64encode(data).decode()
+        
+        st.sidebar.markdown(
+            f"""
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <img src="data:{mime_type};base64,{encoded}" alt="DeepSeq Logo" width="200">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        # If logo can't be found, display text instead
+        st.sidebar.markdown(
+            """
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <h2 style="color: #4A90E2;">DeepSeq</h2>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+# Try to add the logo
+add_logo("logo.png")
+
 # Sidebar
-st.sidebar.title('🎈 ESMFold')
-st.sidebar.write('[*ESMFold*](https://esmatlas.com/about) is an end-to-end single sequence protein structure predictor based on the ESM-2 language model. For more information, read the [research article](https://www.biorxiv.org/content/10.1101/2022.07.20.500902v2) and the [news article](https://www.nature.com/articles/d41586-022-03539-1) published in *Nature*.')
+st.sidebar.write('[*DeepSeq*](https://esmatlas.com/about) is an end-to-end single sequence protein structure predictor based on the ESM-2 language model.')
 
 # List of valid amino acids for validation
 VALID_AMINO_ACIDS = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 
@@ -149,6 +194,9 @@ def update(sequence=txt):
         progress_bar.progress(90)
         status_text.text("Rendering visualization...")
         
+        # Main area
+        st.title('DeepSeq Protein Structure Prediction')
+
         # Display protein structure
         st.subheader('Visualization of predicted protein structure')
         render_mol(
@@ -184,14 +232,15 @@ def update(sequence=txt):
         progress_bar.empty()
         status_text.empty()
 
-# Main area
-st.title('ESMFold Protein Structure Prediction')
+
 
 # Predict button
 predict = st.sidebar.button('Predict', on_click=update)
 
 # Initial state
 if not predict:
+    # Main area
+    st.title('DeepSeq Protein Structure Prediction')
     st.info('👈 Enter a protein sequence and click "Predict" to visualize its structure')
     
     # Basic app instructions
