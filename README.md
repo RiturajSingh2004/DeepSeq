@@ -1,4 +1,4 @@
-# DeepSeq - Advanced Protein Analysis and Prediction
+# DeepSeq - Deep Protein Analysis and Prediction
 
 <p align="center"><img src="logo.png" alt="DeepSeq Logo" width="350" /></p>
 
