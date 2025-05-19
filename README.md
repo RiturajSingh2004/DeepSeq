@@ -1,6 +1,6 @@
 # DeepSeq - Advanced Protein Analysis and Prediction
 
-<p align="center"><img src="logo.png" alt="DeepSeq Logo" width="500" /></p>
+<p align="center"><img src="logo.png" alt="DeepSeq Logo" width="350" /></p>
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/streamlit-1.22.0+-red.svg)](https://streamlit.io)
