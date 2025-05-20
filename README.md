@@ -59,10 +59,10 @@ streamlit run app.py
 
 ```
 deepseq/
-├── app.py                  # Main Streamlit application
-├── requirements.txt        # Python dependencies
-├── logo.png               # Application logo
-├── predicted.pdb          # Output structure file
+├── app.py                # Main Streamlit application
+├── requirements.txt      # Python dependencies
+├── logo.png              # Application logo
+├── predicted.pdb         # Output structure file
 └── README.md             # Documentation
 ```
 
