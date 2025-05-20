@@ -33,8 +33,8 @@ AI-powered protein analysis tool that provides comprehensive structural and func
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/riturajsingh/deepseq.git
-cd deepseq
+git clone https://github.com/RiturajSingh2004/DeepSeq.git
+cd DeepSeq
 ```
 
 2. Create and activate a virtual environment (optional but recommended):
@@ -87,6 +87,30 @@ Provides interactive 3D visualization of protein structures.
 - Easy-to-use interface
 - High-quality rendering
 
+```python
+def render_structure(pdb_data, style='cartoon', color_scheme='spectrum', spin=False):
+    """
+    Render protein structure with customizable options.
+    
+    Args:
+        pdb_data (str): PDB format structure data
+        style (str): Visualization style ('cartoon', 'stick', 'sphere')
+        color_scheme (str): Color scheme for visualization
+        spin (bool): Enable structure rotation
+    """
+    view = py3Dmol.view(width=800, height=600)
+    view.addModel(pdb_data, "pdb")
+    view.setStyle({style: {'colorscheme': color_scheme}})
+    if spin:
+        view.spin(True)
+    view.zoomTo()
+    return view
+
+# Usage example:
+view = render_structure(pdb_data, style='cartoon', color_scheme='spectrum')
+showmol(view, height=600, width=800)
+```
+
 ### Property Analysis
 
 #### ResidueAnalyzer
@@ -105,6 +129,31 @@ Analyzes per-residue properties of proteins.
 - Functional annotation
 - Input validation
 
+```python
+def analyze_sequence_properties(sequence: str) -> dict:
+    """
+    Comprehensive sequence analysis function.
+    
+    Args:
+        sequence (str): Amino acid sequence
+        
+    Returns:
+        dict: Dictionary containing property calculations
+    """
+    properties = {
+        'length': len(sequence),
+        'molecular_weight': calculate_mol_weight(sequence),
+        'hydrophobicity': calculate_hydrophobicity_profile(sequence),
+        'charge_distribution': analyze_charge_distribution(sequence),
+        'secondary_structure': predict_secondary_structure(sequence)
+    }
+    return properties
+
+# Example usage:
+sequence = "MVKVGVNGFGRIGRLVTRAAFNSGKVDIVAINDPFIDLNYMVYMFQYDSTHGKFHGTVKAENGKLVINGNPITIFQERDPSKIKWGDAGAEYVVESTGVFTTMEKAGAHLQGGAKRVIISAPSADAPMFVMGVNHEKYDNSLKIISNASCTTNCLAPLAKVIHDNFGIVEGLMTTVHAITATQKTVDGPSGKLWRDGRGALQNIIPASTGAAKAVGKVIPELDGKLTGMAFRVPTANVSVVDLTCRLEKPAKYDDIKKVVKQASEGPLKGILGYTEHQVVSSDFNSDTHSSTFDAGAGIALNDHFVKLISWYDNEFGYSNRVVDLMAHMASKE"
+results = analyze_sequence_properties(sequence)
+```
+
 ### ML Models
 
 #### EmbeddingGenerator
@@ -121,6 +170,34 @@ Generates protein sequence embeddings for analysis.
 - Captures protein characteristics
 - Enables similarity analysis
 - Visualization-ready output
+
+```python
+class ProteinEmbedding:
+    def __init__(self, model_name="esm2_t33_650M_UR50D"):
+        self.model_name = model_name
+        self.model, self.alphabet = pretrained.load_model_and_alphabet(model_name)
+        self.batch_converter = self.alphabet.get_batch_converter()
+    
+    def generate_embeddings(self, sequence: str) -> np.ndarray:
+        """
+        Generate protein sequence embeddings.
+        
+        Args:
+            sequence (str): Amino acid sequence
+            
+        Returns:
+            np.ndarray: Sequence embedding vector
+        """
+        data = [("protein", sequence)]
+        batch_labels, batch_strs, batch_tokens = self.batch_converter(data)
+        with torch.no_grad():
+            results = self.model(batch_tokens, repr_layers=[33])
+        return results["representations"][33].numpy()
+
+# Example usage:
+embedder = ProteinEmbedding()
+sequence_embedding = embedder.generate_embeddings(sequence)
+```
 
 ## 📈 How It Works
 
