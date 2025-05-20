@@ -2,6 +2,7 @@
 
 <p align="center"><img src="logo.png" alt="DeepSeq Logo" width="350" /></p>
 
+<div align="center">
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/streamlit-1.22.0+-red.svg)](https://streamlit.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,6 +10,7 @@
 [![Visualization: Py3DMol](https://img.shields.io/badge/Visualization-Py3DMol-purple.svg)](https://3dmol.csb.pitt.edu)
 
 AI-powered protein analysis tool that provides comprehensive structural and functional insights using state-of-the-art machine learning models.
+</div>
 
 ## 📊 Features
 
