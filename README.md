@@ -234,6 +234,103 @@ sequence_embedding = embedder.generate_embeddings(sequence)
    - Embedding visualizations
    - Radar charts for stability
 
+### Analysis Modes
+
+The application offers several specialized analysis modes:
+
+#### 1. Overview Mode
+```python
+def get_sequence_overview(sequence: str) -> dict:
+    """Provides a comprehensive overview of the protein sequence."""
+    return {
+        'length': len(sequence),
+        'molecular_weight': calculate_molecular_weight(sequence),
+        'isoelectric_point': calculate_isoelectric_point(sequence),
+        'amino_acid_composition': get_aa_composition(sequence)
+    }
+```
+- Quick summary of key protein characteristics
+- Basic sequence statistics and composition
+- Overview of physicochemical properties
+- Summary visualization of key features
+
+#### 2. Structure Prediction Mode
+```python
+def predict_structure(sequence: str) -> Tuple[str, float]:
+    """Predicts 3D structure using ESMFold."""
+    structure, confidence = esm_fold.predict(sequence)
+    return structure, confidence  # Returns PDB string and confidence score
+```
+- High-accuracy 3D structure prediction using ESMFold
+- Structure quality assessment and confidence scores
+- Multiple visualization styles (cartoon, surface, stick)
+- Interactive structure manipulation
+
+#### 3. Sequence Embeddings Mode
+```python
+def analyze_embeddings(sequence: str) -> np.ndarray:
+    """Generates and analyzes protein embeddings."""
+    embedder = ProteinEmbedding()
+    embeddings = embedder.generate_embeddings(sequence)
+    return embedder.analyze_embedding_features(embeddings)
+```
+- Deep learning-based sequence analysis
+- Protein family classification
+- Similarity search capabilities
+- Dimensionality reduction visualization
+
+#### 4. Residue Properties Mode
+```python
+def analyze_residue_properties(sequence: str) -> dict:
+    """Detailed per-residue property analysis."""
+    return {
+        'hydrophobicity': calculate_hydrophobicity_profile(sequence),
+        'secondary_structure': predict_secondary_structure(sequence),
+        'solvent_accessibility': predict_accessibility(sequence),
+        'conservation': analyze_conservation(sequence)
+    }
+```
+- Per-residue property calculations
+- Secondary structure prediction
+- Solvent accessibility analysis
+- Conservation analysis
+- Interactive property plots
+
+#### 5. Stability Analysis Mode
+```python
+def analyze_stability(sequence: str, conditions: dict) -> dict:
+    """Predicts protein stability under various conditions."""
+    return {
+        'thermal_stability': predict_thermal_stability(sequence),
+        'ph_stability': analyze_ph_stability(sequence, conditions['ph_range']),
+        'mutations': suggest_stabilizing_mutations(sequence)
+    }
+```
+- Thermal stability prediction
+- pH stability analysis
+- Salt tolerance estimation
+- Mutation impact prediction
+- Stability optimization suggestions
+
+#### 6. Function Prediction Mode
+```python
+def predict_function(sequence: str) -> dict:
+    """Predicts protein function and interactions."""
+    return {
+        'subcellular_location': predict_localization(sequence),
+        'go_terms': predict_go_terms(sequence),
+        'interactions': predict_interactions(sequence),
+        'enzyme_classification': predict_ec_number(sequence)
+    }
+```
+- Subcellular localization prediction
+- GO term annotation
+- Protein-protein interaction prediction
+- Enzyme classification
+- Functional domain analysis
+
+Each mode can be accessed through the sidebar menu and provides specialized visualizations and downloadable results. Users can seamlessly switch between modes while maintaining their sequence and previous analysis results.
+
 ### Technical Details
 
 The application uses several advanced technologies:
